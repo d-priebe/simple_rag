@@ -14,6 +14,7 @@ Below you will find the sources to the tutorial as well as a breakdown of any mo
 
 Tutorial approach: https://www.mongodb.com/docs/atlas/ai-integrations/langchain/graph-rag/?tck=graphrag_blog_4_14_25&utm_campaign=Product+Marketing&utm_source=Docs&utm_medium=YouTube&utm_content=LHzOkwdRars&utm_term=dave.g
 
+
 Multi-hop reasoning & GraphRAG apporachs: https://neo4j.com/blog/genai/knowledge-graph-llm-multi-hop-reasoning/#:~:text=Most%20RAG%20systems%20today%20use,and%20the%20connections%20between%20them.
 
 
