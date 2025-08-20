@@ -6,13 +6,6 @@ from transformers import pipeline
 
 # https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0
 model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-model = AutoModelForCausalLM.from_pretrained(model_id)
-
-pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=256)
-hf_llm = HuggingFacePipeline(pipeline=pipe)
-
-ai_assistant = ChatHuggingFace(llm= hf_llm)
 
 class chat_model:
     def __init__(self, model_id: None):
@@ -28,6 +21,15 @@ class chat_model:
         self.ai_assistant = ChatHuggingFace(llm= hf_llm)
 
         return self.ai_assistant
+    
+    def chat_response(self, query, graph_store):
+
+        query = "What are the different Llama-Nemotron series of models?"
+        answer = graph_store.chat_response(query)
+        return(answer.content)
+
+
+        
 
 
 
