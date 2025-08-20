@@ -1,16 +1,18 @@
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.callbacks.manager import CallbackManagerForLLMRun
+from langchain_core.outputs import ChatGeneration
 from langchain_core.messages import BaseMessage, AIMessage
 from langchain_core.outputs import ChatResult
 from typing import Any, Dict, List, Optional
+from pathlib import Path
 
 class TinyLlama(BaseChatModel):
 
     model_name: str = "TinyLlama"
+    model_path: Path
 
-    def __init__(self, model_path, model_name):
-        self.model_path = model_path
-        self.model_name = model_name
+    def __init__(self, model_path: str, model_name: str):
+        super().__init__(model_path = Path(model_path), model_name = model_name)
 
     def _generate(
         self,
@@ -21,12 +23,13 @@ class TinyLlama(BaseChatModel):
     ) -> ChatResult:
 
 
-        tokens = last_message.content[: self.parrot_buffer_length]
-        
+        tokens = messages[-1].content
+        ct_input_tokens = sum(len(message.content) for message in messages)
+        ct_output_tokens = len(tokens)
+
         message = AIMessage(
             content=tokens,
-            additional_kwargs={},  # Used to add additional payload to the message
-            response_metadata={  # Use for response metadata
+            response_metadata={ 
                 "time_in_seconds": 3,
                 "model_name": self.model_name,
             },
@@ -36,13 +39,14 @@ class TinyLlama(BaseChatModel):
                 "total_tokens": ct_input_tokens + ct_output_tokens,
             },
         )
-        ##
+        
 
         generation = ChatGeneration(message=message)
         return ChatResult(generations=[generation])
-
-
-        return super()._generate(messages, stop, run_manager, **kwargs)
+    
+    @property
+    def _llm_type(self) -> str:
+        return "custom-TinyLlama-chat"
 
     
 
