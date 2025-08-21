@@ -208,5 +208,5 @@ __marimo__/
 
 
 src/data
-
+mongo_db_envs.py
 TinyLlama.exe

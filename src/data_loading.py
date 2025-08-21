@@ -1,8 +1,7 @@
 from langchain_mongodb.graphrag.graph import MongoDBGraphStore
 from langchain_community.document_loaders import PyPDFDirectoryLoader
 from langchain.text_splitter import TokenTextSplitter
-
-
+import os
 
 
 class Data_Loader:
@@ -23,15 +22,10 @@ class Data_Loader:
         return
     
     def build_knowledge_graph(self, model):
-
-
-
-
-
-
-graph_store = MongoDBGraphStore.from_connection_string(
-    connection_string = ATLAS_CONNECTION_STRING,
-    database_name = ATLAS_DB_NAME,
-    collection_name = ATLAS_COLLECTION,
-    entity_extraction_model = chat_model
-)
+        graph_store = MongoDBGraphStore.from_connection_string(
+        connection_string = os.getenv("ATLAS_CONNECTION_STRING"),
+        database_name = os.getenv("ATLAS_DB_NAME"),
+        collection_name = os.getenv("ATLAS_COLLECTION"),
+        entity_extraction_model = model
+        )
+        graph_store.add_documents(self.pdf_docs)

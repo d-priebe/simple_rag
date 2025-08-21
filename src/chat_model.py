@@ -4,10 +4,8 @@ from langchain_core.messages import SystemMessage, HumanMessage
 import torch
 from transformers import pipeline
 
-# https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0
-model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
-class chat_model:
+class Ai_assistant:
     def __init__(self, model_id: None):
         self.model_id = model_id
 
