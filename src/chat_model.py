@@ -13,16 +13,16 @@ class Ai_assistant:
     def instantiate_model(self):
         # Instantiate tokenzier + model
         tokenizer = AutoTokenizer.from_pretrained(self.model_id)
+        tokenizer.truncation_side = "left"
         model = AutoModelForCausalLM.from_pretrained(self.model_id)
-        pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=256)
+        pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=256, max_length =2048,truncation = True)
         hf_llm = HuggingFacePipeline(pipeline=pipe)
         self.ai_assistant = ChatHuggingFace(llm= hf_llm)
 
         return self.ai_assistant
     
     def chat_response(self, query, graph_store):
-
-        query = "What are the different Llama-Nemotron series of models?"
+        
         answer = graph_store.chat_response(query)
         return(answer.content)
 

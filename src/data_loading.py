@@ -17,7 +17,7 @@ class Data_Loader:
     # https://www.mongodb.com/docs/atlas/ai-integrations/langchain/graph-rag/?tck=graphrag_blog_4_14_25&utm_campaign=Product+Marketing&utm_source=Docs&utm_medium=YouTube&utm_content=LHzOkwdRars&utm_term=dave.g
     # https://python.langchain.com/api_reference/text_splitters/base/langchain_text_splitters.base.TokenTextSplitter.html
     def tokenize(self, docs):
-        text_splitter = TokenTextSplitter(chunk_size=1024, chunk_overlap=0)
+        text_splitter = TokenTextSplitter(chunk_size=250, chunk_overlap=50)
         self.pdf_docs = text_splitter.split_documents(docs)
         return
     
@@ -29,3 +29,5 @@ class Data_Loader:
         entity_extraction_model = model
         )
         graph_store.add_documents(self.pdf_docs)
+
+        return graph_store

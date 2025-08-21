@@ -21,8 +21,13 @@ def main():
     model = llm.instantiate_model()
 
     # Build Knowledge Graph
+    graph_store = pdf_loader.build_knowledge_graph(model)
 
-    pdf_loader.build_knowledge_graph(model)
+    while True:
+        query = input("Q> ").strip()
+        if query.lower() in ("exit"): break
+        if not query: continue
+        print("Answer:", llm.chat_response(query, graph_store = graph_store))
 
 
 
